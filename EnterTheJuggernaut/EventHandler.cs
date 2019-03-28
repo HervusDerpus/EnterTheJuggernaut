@@ -59,7 +59,7 @@ namespace EnterTheJuggernaut
 			Juggernaut.GiveItem(ItemType.LOGICER);
 			Juggernaut.SetAmmo(AmmoType.DROPPED_7, 200);
 			Juggernaut.PersonalBroadcast(10, "<color=red>YOU ARE THE JUGGERNAUT!</color> <color=yellow>You have high HP, and can break down doors!</color> <color=blue>Kill them all!</color>", false);
-			Juggernaut.SetRank("light_green", "JUGGERNAUGHT");
+			Juggernaut.SetRank("light_green", "JUGGERNAUT");
 		}
 
 		public void OnRoundStart(RoundStartEvent ev)
