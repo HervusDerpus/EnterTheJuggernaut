@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnterTheJuggernaught", "EnterTheJuggernaught\EnterTheJuggernaught.csproj", "{F9523898-41FB-4BDF-9262-41C69E9ECDD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnterTheJuggernaut", "EnterTheJuggernaut\EnterTheJuggernaut.csproj", "{F9523898-41FB-4BDF-9262-41C69E9ECDD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CA4225C5-BFC5-4A42-8D87-BEC3220104D9}
+		SolutionGuid = {11F32413-0DAF-45C4-83F6-4D51E4C7ACBD}
 	EndGlobalSection
 EndGlobal
