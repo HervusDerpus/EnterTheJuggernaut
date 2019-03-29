@@ -1,6 +1,9 @@
-﻿using Smod2;
+﻿using System;
+using Smod2;
 using Smod2.Attributes;
 using Smod2.Config;
+using Smod2.EventHandlers;
+using Smod2.Events;
 
 namespace EnterTheJuggernaut
 {
@@ -28,16 +31,15 @@ namespace EnterTheJuggernaut
 		{
 			this.Info(Details.name + " was disabled");
 		}
-
 		public override void OnEnable()
 		{
 			this.Info(Details.name + " was enabled");
 		}
-
 		public override void Register()
 		{
 			this.AddEventHandlers(new EventHandler(this));
-			this.AddCommand("juggernaught", new CommandHandler(this));
+			this.AddEventHandler(typeof(IEventHandlerPlayerJoin), new EventHandler(this), Priority.High);
+			this.AddCommand("juggernaut", new CommandHandler(this));
 
 			this.AddConfig(new ConfigSetting("etj_disable", false, SettingType.BOOL, true, "Disabled the ETJ plugin"));
 
@@ -45,7 +47,6 @@ namespace EnterTheJuggernaut
 
 			this.AddConfig(new ConfigSetting("etj_ranks", new[] { "owner" }, SettingType.LIST, true, "List of ranks that can trigger EnterTheJuggernaut"));
 		}
-
 		public void RefreshConfig()
 		{
 			ETJdisable = GetConfigBool("etj_disable");

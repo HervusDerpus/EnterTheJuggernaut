@@ -12,12 +12,11 @@ using Random = UnityEngine.Random;
 namespace EnterTheJuggernaut
 {
 	class EventHandler : IEventHandlerRoundStart, IEventHandlerWaitingForPlayers, IEventHandlerElevatorUse, IEventHandlerDoorAccess, IEventHandlerPlayerPickupItem,
-		IEventHandlerPlayerTriggerTesla, IEventHandlerSummonVehicle, IEventHandlerRoundEnd, IEventHandlerPlayerDie, IEventHandlerPlayerJoin, IEventHandlerReload
+		IEventHandlerPlayerTriggerTesla, IEventHandlerSummonVehicle, IEventHandlerRoundEnd, IEventHandlerPlayerDie, IEventHandlerReload, IEventHandlerPlayerJoin
 	{
 		private readonly EnterTheJuggernaut plugin;
 
 		public static bool WaitingForPlayers = false;
-		public static bool GhostRound = false;
 		public static Player Juggernaut { get; set; }
 		public int spawncount = 0;
 		public bool roundstart;
@@ -46,7 +45,7 @@ namespace EnterTheJuggernaut
 
 			taskforce.PersonalBroadcast(10, "<color=blue>YOU ARE THE TASKFORCE!</color> <color=red>Destroy the Juggernaut!</color> ", false);
 		}
-		public void Juggernuaghtspawn(Player player)
+		public void Juggernuaghtspawn(Player Juggernaut)
 		{
 			Juggernaut.ChangeRole(Role.CHAOS_INSURGENCY, false, false);
 			Juggernaut.Teleport(plugin.Server.Map.GetRandomSpawnPoint(Role.SCP_106));
@@ -98,13 +97,50 @@ namespace EnterTheJuggernaut
 					}
 				}
 				Juggernuaghtspawn(Juggernaut);
-
+				
 				spawncount = 1;
 			}
 		}
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			plugin.RefreshConfig();
+		}
+		public void OnPlayerDie(PlayerDeathEvent ev)
+		{
+			if (plugin.Enabled && Juggernaut.PlayerId != ev.Player.PlayerId && plugin.Server.Round.Duration > 31f)
+			{
+				Juggernaut.PersonalBroadcast(2, plugin.Server.GetPlayers(Role.NTF_LIEUTENANT).Count + " TARGETS REMAINING", false);
+				if (plugin.Server.GetPlayers(Role.NTF_LIEUTENANT).Count <= 5 && spawncount < 5)
+				{
+					spawncount++;
+					List<Player> players = plugin.Server.GetPlayers();
+
+					foreach (Player player in plugin.Server.GetPlayers(Role.SPECTATOR))
+					{
+						TaskForcespawn(player);
+					}
+					TaskForcespawn(ev.Player);
+				}
+			}
+		}
+		public void OnPlayerJoin(PlayerJoinEvent ev)
+		{
+			if (plugin.Enabled && roundstart == true)
+			{
+				TaskForcespawn(ev.Player);
+			}
+		}
+		public void OnReload(PlayerReloadEvent ev)
+		{
+			if (plugin.Enabled && Juggernaut.PlayerId == ev.Player.PlayerId)
+			{
+				ev.Player.SetAmmo(AmmoType.DROPPED_7, 200);
+			}
+			else if (plugin.Enabled && Juggernaut.PlayerId != ev.Player.PlayerId)
+			{
+				ev.Player.SetAmmo(AmmoType.DROPPED_5, 40);
+				ev.Player.SetAmmo(AmmoType.DROPPED_9, 50);
+			}
 		}
 		public void OnElevatorUse(PlayerElevatorUseEvent ev)
 		{
@@ -149,44 +185,6 @@ namespace EnterTheJuggernaut
 				roundstart = false;
 				plugin.Enabled = false;
 				Juggernaut.SetRank();
-			}
-		}
-		public void OnPlayerDie(PlayerDeathEvent ev)
-		{
-			if (plugin.Enabled && Juggernaut.PlayerId != ev.Player.PlayerId && plugin.Server.Round.Duration > 31f)
-			{
-				Juggernaut.PersonalBroadcast(2, plugin.Server.GetPlayers(Role.NTF_LIEUTENANT).Count + " TARGETS REMAINING", false);
-				if (plugin.Server.GetPlayers(Role.NTF_LIEUTENANT).Count <= 5 && spawncount < 5)
-				{
-					spawncount++;
-					List<Player> players = plugin.Server.GetPlayers();
-
-					foreach (Player player in plugin.Server.GetPlayers(Role.SPECTATOR))
-					{
-						TaskForcespawn(player);
-					}
-				}
-
-
-			}
-		}
-		public void OnPlayerJoin(PlayerJoinEvent ev)
-		{
-           if (plugin.Enabled && roundstart == true)
-			{
-				TaskForcespawn(ev.Player);
-			}
-		}
-		public void OnReload(PlayerReloadEvent ev)
-		{
-			if (plugin.Enabled && Juggernaut.PlayerId == ev.Player.PlayerId)
-			{
-				ev.Player.SetAmmo(AmmoType.DROPPED_7, 200);
-			}
-			else if (plugin.Enabled && Juggernaut.PlayerId != ev.Player.PlayerId)
-			{
-				ev.Player.SetAmmo(AmmoType.DROPPED_5, 40);
-				ev.Player.SetAmmo(AmmoType.DROPPED_9, 50);
 			}
 		}
 	}
