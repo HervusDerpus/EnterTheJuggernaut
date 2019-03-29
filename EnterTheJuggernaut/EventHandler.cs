@@ -55,7 +55,6 @@ namespace EnterTheJuggernaut
 				item.Remove();
 			}
 			Juggernaut.SetHealth(plugin.ETJhp);
-			Juggernaut.RemoveHandcuffs();
 			Juggernaut.GiveItem(ItemType.LOGICER);
 			Juggernaut.SetAmmo(AmmoType.DROPPED_7, 200);
 			Juggernaut.PersonalBroadcast(10, "<color=red>YOU ARE THE JUGGERNAUT!</color> <color=yellow>You have high HP, and can break down doors!</color> <color=blue>Kill them all!</color>", false);
