@@ -13,7 +13,7 @@ namespace EnterTheJuggernaut
 		description = "Gamemode plugin for SCP: Secret Laboratory",
 		id = "phoenix.etj",
 		configPrefix = "etj",
-		version = "1.0.0",
+		version = "1.0.1",
 		SmodMajor = 3,
 		SmodMinor = 4,
 		SmodRevision = 0
