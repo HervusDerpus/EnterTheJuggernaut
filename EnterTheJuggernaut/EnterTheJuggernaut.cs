@@ -12,13 +12,14 @@ namespace EnterTheJuggernaut
 		name = "EnterTheJuggernaut",
 		description = "Gamemode plugin for SCP: Secret Laboratory",
 		id = "phoenix.etj",
+		configPrefix = "etj",
 		version = "1.0.0",
 		SmodMajor = 3,
-		SmodMinor = 3,
+		SmodMinor = 4,
 		SmodRevision = 0
 		)]
 
-	public class EnterTheJuggernaut : Plugin
+	public partial class EnterTheJuggernaut : Plugin
     {
 
 		public bool ETJdisable { get; private set; }
@@ -41,11 +42,9 @@ namespace EnterTheJuggernaut
 			this.AddEventHandler(typeof(IEventHandlerPlayerJoin), new EventHandler(this), Priority.High);
 			this.AddCommand("juggernaut", new CommandHandler(this));
 
-			this.AddConfig(new ConfigSetting("etj_disable", false, SettingType.BOOL, true, "Disabled the ETJ plugin"));
-
-			this.AddConfig(new ConfigSetting("etj_hp", 6000, SettingType.NUMERIC, true, "Starting HP for the juggernaut"));
-
-			this.AddConfig(new ConfigSetting("etj_ranks", new[] { "owner" }, SettingType.LIST, true, "List of ranks that can trigger EnterTheJuggernaut"));
+			this.AddConfig(new ConfigSetting("etj_disable", false, false, true, "Disabled the ETJ plugin"));
+			this.AddConfig(new ConfigSetting("etj_hp", 6000, false, true, "Starting HP for the juggernaut"));
+			this.AddConfig(new ConfigSetting("etj_ranks", new[] { "owner" }, false, true, "List of ranks that can trigger EnterTheJuggernaut"));
 		}
 		public void RefreshConfig()
 		{

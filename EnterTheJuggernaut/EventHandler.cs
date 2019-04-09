@@ -25,7 +25,7 @@ namespace EnterTheJuggernaut
 
 		public void TaskForcespawn(Player taskforce)
 		{
-			taskforce.ChangeRole(Role.NTF_LIEUTENANT, false, false);
+			taskforce.ChangeRole(Role.NTF_COMMANDER, false, false);
 			taskforce.Teleport(plugin.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53));
 
 			foreach (SMitem item in taskforce.GetInventory())
@@ -37,7 +37,6 @@ namespace EnterTheJuggernaut
 			taskforce.GiveItem(ItemType.P90);
 			taskforce.GiveItem(ItemType.MEDKIT);
 			taskforce.GiveItem(ItemType.RADIO);
-			taskforce.GiveItem(ItemType.WEAPON_MANAGER_TABLET);
 
 			taskforce.SetAmmo(AmmoType.DROPPED_5, 80);
 			taskforce.SetAmmo(AmmoType.DROPPED_7, 0);
@@ -55,7 +54,7 @@ namespace EnterTheJuggernaut
 			}
 			Juggernaut.SetHealth(plugin.ETJhp);
 			Juggernaut.GiveItem(ItemType.LOGICER);
-			Juggernaut.SetAmmo(AmmoType.DROPPED_7, 400);
+			Juggernaut.SetAmmo(AmmoType.DROPPED_7, 200);
 			Juggernaut.PersonalBroadcast(10, "<color=red>YOU ARE THE JUGGERNAUT!</color> <color=yellow>You have high HP, and can break down doors!</color> <color=blue>Kill them all!</color>", false);
 			Juggernaut.SetRank("light_green", "JUGGERNAUT");
 		}
@@ -125,7 +124,7 @@ namespace EnterTheJuggernaut
 		}
 		public void OnPlayerJoin(PlayerJoinEvent ev)
 		{
-			if (plugin.Enabled && roundstart == true)
+			if (plugin.Enabled && (plugin.Round.Duration < 0 && plugin.Round.Duration >= 30))
 			{
 				TaskForcespawn(ev.Player);
 			}
@@ -134,7 +133,7 @@ namespace EnterTheJuggernaut
 		{
 			if (plugin.Enabled && Juggernaut.PlayerId == ev.Player.PlayerId)
 			{
-				ev.Player.SetAmmo(AmmoType.DROPPED_7, 200);
+				ev.Player.SetAmmo(AmmoType.DROPPED_7, 100);
 			}
 			else if (plugin.Enabled && Juggernaut.PlayerId != ev.Player.PlayerId)
 			{
