@@ -96,8 +96,6 @@ namespace EnterTheJuggernaut
 					}
 				}
 				Juggernuaghtspawn(Juggernaut);
-				
-				spawncount = 1;
 			}
 		}
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
@@ -108,8 +106,8 @@ namespace EnterTheJuggernaut
 		{
 			if (plugin.Enabled && Juggernaut.PlayerId != ev.Player.PlayerId && plugin.Server.Round.Duration > 31f)
 			{
-				Juggernaut.PersonalBroadcast(2, plugin.Server.GetPlayers(Role.NTF_LIEUTENANT).Count + " TARGETS REMAINING", false);
-				if (plugin.Server.GetPlayers(Role.NTF_LIEUTENANT).Count <= 5 && spawncount < 5)
+				Juggernaut.PersonalBroadcast(2, plugin.Server.GetPlayers(Role.NTF_COMMANDER).Count + " TARGETS REMAINING", false);
+				if (plugin.Server.GetPlayers(Role.NTF_COMMANDER).Count <= 5 && spawncount < 4)
 				{
 					spawncount++;
 					List<Player> players = plugin.Server.GetPlayers();
